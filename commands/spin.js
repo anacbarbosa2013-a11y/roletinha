@@ -242,9 +242,41 @@ export async function execute(interaction, uplupAPI) {
 
     // Create embed with Discord timestamp (shows viewer's local timezone on hover)
     const spinTimestamp = Math.floor(Date.now() / 1000);
-    const embed = new EmbedBuilder()
+     // Pick a random winner
+    const winnerIndex = Math.floor(Math.random() * entries.length);
+    const winner = entries[winnerIndex];
+
+    // Generate the wheel GIF
+    const gifBuffer = await generateWheelGIF(entries, {
+      winner,
+      colorPalette,
+      duration: 4000,
+      fps: 20,
+      spinRevolutions: 4
+    });
+
+    // Create attachment
+    const attachment = new AttachmentBuilder(gifBuffer, { name: 'wheel-spin.gif' });
+
+    // Create embed with Discord timestamp (shows viewer's local timezone on hover)
+    const spinTimestamp = Math.floor(Date.now() / 1000);
+    const frases = [
+  "🥰 Eu escolhi um casalzinho! Espero que eles gostem de abraços!",
+  "🎡 A lady Felicia decretou o destino.",
+  "🐱 Vou apertar os vencedores e chamar eles de Romeu e Julieta!",
+  "✨ Eu só giro. As consequências são com vocês.",
+  "👑 O tribunal da Felícia decidiu. Recursos negados.",
+  "💖 Escolhi um casal para receber muito carinho!",
+  "🎀 A sorte falou. A Felícia concordou.",
+  "🌸 Girei, escolhi e estou muito orgulhosa de mim mesma."
+];
+
+const frase = frases[Math.floor(Math.random() * frases.length)];
+
+const embed = new EmbedBuilder()
       .setColor(0x6C60D7)
       .setTitle(wheelName)
+      .setDescription(frase)
       .setImage('attachment://wheel-spin.gif')
       .addFields(
         { name: 'Winner', value: `**${winner}**`, inline: true },
@@ -255,6 +287,8 @@ export async function execute(interaction, uplupAPI) {
         text: 'Powered by Uplup',
         iconURL: 'https://uplup.com/favicon.ico'
       });
+
+
 
     // Log to Uplup API if available (creates a temporary wheel for tracking)
     if (uplupAPI) {
