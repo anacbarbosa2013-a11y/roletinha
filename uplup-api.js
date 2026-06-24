@@ -45,7 +45,12 @@ export class UplupAPI {
     }
 
     const response = await fetch(url, options);
-    const data = await response.json();
+
+console.log('STATUS:', response.status);
+
+const data = await response.json();
+
+console.log('RESPONSE:', JSON.stringify(data, null, 2));
 
     if (!response.ok) {
       throw new Error(data.message || data.error?.message || `API request failed with status ${response.status}`);
