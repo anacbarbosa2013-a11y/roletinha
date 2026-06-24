@@ -267,7 +267,7 @@ export async function generateWheelImage(entries, winner, options = {}) {
   ctx.fillText('🎉 WINNER 🎉', centerX, height - 45);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 28px Inter';
+  ctx.font = 'bold 28px Arial';
   ctx.fillText(winner, centerX, height - 15);
 
   return canvas.toBuffer('image/png');
